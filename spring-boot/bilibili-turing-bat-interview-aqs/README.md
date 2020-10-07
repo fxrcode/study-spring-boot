@@ -24,6 +24,7 @@
         1. Aggregate Report: This is the throughput, error rate, ...
         2. View Results Tree: This is to debug each request
 
+### Raw
 * Output from Spring boot app, and you can see 11 orders: over-ordered in miaosha! 
 ```shell script
 2020-10-06 19:28:07.706  INFO 939333 --- [nio-8080-exec-2] com.example.aqs.service.TradeService     : success purchase, decrement stock, current stock 4
@@ -38,23 +39,22 @@
 2020-10-06 19:28:07.740  INFO 939333 --- [io-8080-exec-10] com.example.aqs.service.TradeService     : success purchase, decrement stock, current stock 0
 2020-10-06 19:28:07.749 ERROR 939333 --- [nio-8080-exec-2] com.example.aqs.service.TradeService     : Out of stock!
 2020-10-06 19:28:07.752 ERROR 939333 --- [nio-8080-exec-6] com.example.aqs.service.TradeService     : Out of stock!
-2020-10-06 19:28:07.752 ERROR 939333 --- [nio-8080-exec-4] com.example.aqs.service.TradeService     : Out of stock!
-2020-10-06 19:28:07.756 ERROR 939333 --- [nio-8080-exec-7] com.example.aqs.service.TradeService     : Out of stock!
-2020-10-06 19:28:07.757 ERROR 939333 --- [nio-8080-exec-5] com.example.aqs.service.TradeService     : Out of stock!
-2020-10-06 19:28:07.759 ERROR 939333 --- [nio-8080-exec-7] com.example.aqs.service.TradeService     : Out of stock!
-2020-10-06 19:28:07.759 ERROR 939333 --- [nio-8080-exec-8] com.example.aqs.service.TradeService     : Out of stock!
-2020-10-06 19:28:07.760 ERROR 939333 --- [nio-8080-exec-3] com.example.aqs.service.TradeService     : Out of stock!
-2020-10-06 19:28:07.760 ERROR 939333 --- [io-8080-exec-10] com.example.aqs.service.TradeService     : Out of stock!
-2020-10-06 19:28:07.764 ERROR 939333 --- [nio-8080-exec-9] com.example.aqs.service.TradeService     : Out of stock!
-2020-10-06 19:28:07.767 ERROR 939333 --- [nio-8080-exec-2] com.example.aqs.service.TradeService     : Out of stock!
-2020-10-06 19:28:07.785 ERROR 939333 --- [io-8080-exec-12] com.example.aqs.service.TradeService     : Out of stock!
-2020-10-06 19:28:07.786 ERROR 939333 --- [nio-8080-exec-5] com.example.aqs.service.TradeService     : Out of stock!
-2020-10-06 19:28:07.787 ERROR 939333 --- [io-8080-exec-12] com.example.aqs.service.TradeService     : Out of stock!
-2020-10-06 19:28:07.789 ERROR 939333 --- [nio-8080-exec-8] com.example.aqs.service.TradeService     : Out of stock!
-2020-10-06 19:28:07.792 ERROR 939333 --- [io-8080-exec-15] com.example.aqs.service.TradeService     : Out of stock!
-2020-10-06 19:28:07.792 ERROR 939333 --- [io-8080-exec-10] com.example.aqs.service.TradeService     : Out of stock!
-2020-10-06 19:28:07.806 ERROR 939333 --- [io-8080-exec-12] com.example.aqs.service.TradeService     : Out of stock!
-2020-10-06 19:28:07.807 ERROR 939333 --- [nio-8080-exec-8] com.example.aqs.service.TradeService     : Out of stock!
+...
 2020-10-06 19:28:07.811 ERROR 939333 --- [nio-8080-exec-5] com.example.aqs.service.TradeService     : Out of stock!
 ```
 
+### `Synchronized(SYNC_ROOT)`
+* This can resolve the concurrent issue because of this lock. But it's not the focal point in this lecture.
+* JMeter: ![](README-files/aqs-sync-jmeter.png)
+* Log: no chaomai, so correct
+```shell script
+2020-10-06 19:46:25.856  INFO 972471 --- [io-8080-exec-16] com.example.aqs.service.TradeService     : success purchase, decrement stock, current stock 4
+2020-10-06 19:46:25.862  INFO 972471 --- [io-8080-exec-13] com.example.aqs.service.TradeService     : success purchase, decrement stock, current stock 3
+2020-10-06 19:46:25.872  INFO 972471 --- [nio-8080-exec-4] com.example.aqs.service.TradeService     : success purchase, decrement stock, current stock 2
+2020-10-06 19:46:25.876  INFO 972471 --- [io-8080-exec-15] com.example.aqs.service.TradeService     : success purchase, decrement stock, current stock 1
+2020-10-06 19:46:25.890  INFO 972471 --- [nio-8080-exec-3] com.example.aqs.service.TradeService     : success purchase, decrement stock, current stock 0
+2020-10-06 19:46:25.901 ERROR 972471 --- [nio-8080-exec-8] com.example.aqs.service.TradeService     : Out of stock!
+....
+2020-10-06 19:46:25.994 ERROR 972471 --- [nio-8080-exec-6] com.example.aqs.service.TradeService     : Out of stock!
+2020-10-06 19:46:25.995 ERROR 972471 --- [nio-8080-exec-5] com.example.aqs.service.TradeService     : Out of stock!
+```
