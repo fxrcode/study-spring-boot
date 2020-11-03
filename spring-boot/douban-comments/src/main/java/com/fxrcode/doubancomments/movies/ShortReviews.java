@@ -40,7 +40,7 @@ public class ShortReviews {
                     start);
             // NextPage='https://movie.douban.com'+soup.find(class_='next').link.get('href')
             WebClient.RequestHeadersSpec<?> requestSpec = client1.get().uri(path)
-                    .cookie("dbcl2", "\"164804700:####\"");
+                    .cookie("dbcl2", "\"164804700:#####\"");
 
             // 3. handle the response
             Mono<String> result = requestSpec.retrieve().bodyToMono(String.class); // .block();
@@ -50,7 +50,7 @@ public class ShortReviews {
             LOGGER.info("Start = {}, Count = {}, parseReview_current = {}", start, count, current);
 
             count += current;
-            if (count >= 50) {
+            if (count >= 300) {
                 break;
             }
             if (current == 0) {
@@ -95,9 +95,15 @@ public class ShortReviews {
             else if (stars.contains("1"))
                 star = 1;
             String time = innerDetail.select("span.comment-time").get(0).childNode(0).outerHtml();
-            String short_review = innerDetail.select("span.short").get(0).childNode(0).outerHtml();
+            String short_review = "";
+            try {
+                short_review = innerDetail.select("span.short").get(0).childNode(0).outerHtml();
+            } catch (Exception e) {
+                //TODO: handle exception
+                LOGGER.warn("No short review for {}", user);
+            }
             LocalDate localDate = LocalDate.parse(time.strip());
-            reviewRepository.save(new ReviewDAO(userId, user, star, localDate, short_review));
+            reviewRepository.save(new ReviewDAO(userId, user, star, localDate, short_review, Integer.parseInt(vote)));
         }
         return links.size();
     }

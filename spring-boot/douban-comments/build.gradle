@@ -25,6 +25,7 @@ dependencies {
 
 	compile 'org.jsoup:jsoup:1.13.1'
 	runtimeOnly 'com.h2database:h2'
+	runtimeOnly 'org.postgresql:postgresql'
 }
 
 test {
