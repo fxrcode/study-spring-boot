@@ -4,6 +4,10 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * https://segmentfault.com/a/1190000037434936
+ * Redis的线程模型和事务
+ */
 @RestController
 public class DemoController {
     public final static String STR_KEY_A="key_a";

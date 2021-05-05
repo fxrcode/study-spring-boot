@@ -47,21 +47,23 @@ public class MessagingRedisApplication {
     }
 
     public static void main(String[] args) throws InterruptedException {
+/*
+        * comment out to test Redis Txn from SegmentFault blog
+        * This is orgin from springboot https://spring.io/guides/gs/messaging-redis/
+        ApplicationContext ctx = SpringApplication.run(MessagingRedisApplication.class, args);
 
-//        ApplicationContext ctx = SpringApplication.run(MessagingRedisApplication.class, args);
-//
-//        StringRedisTemplate template = ctx.getBean(StringRedisTemplate.class);
-//        Receiver receiver = ctx.getBean(Receiver.class);
-//
-//        while (receiver.getCount() == 0) {
-//
-//            LOGGER.info("Sending message...");
-//            template.convertAndSend("chat", "Hello from Redis!");
-//            Thread.sleep(500L);
-//        }
-//
-//        System.exit(0);
+        StringRedisTemplate template = ctx.getBean(StringRedisTemplate.class);
+        Receiver receiver = ctx.getBean(Receiver.class);
 
+        while (receiver.getCount() == 0) {
+
+            LOGGER.info("Sending message...");
+            template.convertAndSend("chat", "Hello from Redis!");
+            Thread.sleep(500L);
+        }
+
+        System.exit(0);
+*/
         SpringApplication.run(MessagingRedisApplication.class, args);
     }
 }

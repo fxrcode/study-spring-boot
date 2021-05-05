@@ -1,6 +1,6 @@
 package com.fxr.springboot.messagingredis;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +14,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 /**
  * https://segmentfault.com/a/1190000037434936
+ * Redis的线程模型和事务
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
